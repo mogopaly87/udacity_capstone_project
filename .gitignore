@@ -1,0 +1,5 @@
+*.log
+*.pyc
+*.cfg
+*.db
+*.pid
