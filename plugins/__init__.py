@@ -5,4 +5,4 @@ import operators
 
 class UdacityPlugin(AirflowPlugin):
     name = "udacity_plugin"
-    operators = [operators.downloadSationDataOperator]
+    operators = [operators.DownloadSationDataOperator]

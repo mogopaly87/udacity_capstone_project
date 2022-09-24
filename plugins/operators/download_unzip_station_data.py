@@ -4,9 +4,10 @@ from airflow.utils.decorators import apply_defaults
 from airflow.contrib.hooks.aws_hook import AwsHook
 from airflow.operators.bash import BashOperator
 import requests
+from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 
 
-class downloadSationDataOperator(BaseOperator):
+class DownloadSationDataOperator(BaseOperator):
     """Download and unzip station data
 
     Args:
@@ -19,7 +20,7 @@ class downloadSationDataOperator(BaseOperator):
                 *args, 
                 **kwargs):
         
-        super(downloadSationDataOperator, self).__init__(*args, **kwargs)
+        super(DownloadSationDataOperator, self).__init__(*args, **kwargs)
         self.station_ids = station_ids
         
         
