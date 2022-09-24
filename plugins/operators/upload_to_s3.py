@@ -36,7 +36,7 @@ class UploadToS3Operator(BaseOperator):
                 s3_hook = S3Hook(aws_conn_id=self.aws_conn_id)
                 s3_hook.load_file(
                 filename=file_name,
-                key=f"{self.key}/{file_name}",
+                key=f"{self.key}/{file_name.split('/')[-1]}",
                 bucket_name=self.bucket_name
             )
         
