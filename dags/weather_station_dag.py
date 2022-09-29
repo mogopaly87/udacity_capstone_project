@@ -14,7 +14,22 @@ from operators.download_unzip_station_data import DownloadSationDataOperator
 from operators.upload_to_s3 import UploadToS3Operator
 import boto3
 from airflow.models import Variable
+# from airflow.contrib.operators.emr_add_steps_operator import EmrAddStepsOperator
+# from airflow.contrib.sensors.emr_step_sensor import EmrStepSensor
+from airflow.providers.amazon.aws.operators.emr import EmrAddStepsOperator
 
+
+
+SPARK_TASK = [
+    {
+        'Name': 'spark_app',
+        'ActionOnFailure': 'CONTINUE',
+        'HadoopJarStep': {
+            'Jar': 'command-runner.jar',
+            'Args': ["spark-submit", "--deploy-mode", "client", "/home/hadoop/exploration.py"],
+        },
+    }
+]
 
 
 # A function that returns a Spark object
@@ -86,20 +101,10 @@ def get_station_ids_as_list()->list:
     return station_ids
 
 
-def transform_to_clean_s3():
-    """_summary_
-    """   
-    access_key_id = Variable('access_key_id')
-    secret_access_key_id = Variable('secret_access_key')
-
-    s3 = boto3.resource('s3', region='us-east-1',
-                        aws_access_key_id=access_key_id,
-                        aws_secret_access_key=secret_access_key_id)
-
 
 with DAG(
     dag_id="upload_example",
-    schedule_interval="@daily",
+    schedule_interval=None,
     start_date=datetime.now()
 ) as dag:
     
@@ -111,20 +116,22 @@ with DAG(
     
 
     
-    download_station_data_to_s3 = DownloadSationDataOperator(
-        task_id="api_to_local",
-        station_ids=get_station_ids_as_list(),
-        region_name="us-east-1",
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        dest_bucket_name="udacity-dend2-mogo",
-        key="raw_files")
+    # download_station_data_to_s3 = DownloadSationDataOperator(
+    #     task_id="api_to_local",
+    #     station_ids=get_station_ids_as_list(),
+    #     region_name="us-east-1",
+    #     aws_access_key_id=aws_access_key_id,
+    #     aws_secret_access_key=aws_secret_access_key,
+    #     dest_bucket_name="udacity-dend2-mogo",
+    #     key="raw_files")
     
-    # unzip_files = BashOperator(
-    #     task_id="unzip_files",
-    #     cwd="/tmp/downloads/",
-    #     bash_command="gunzip *.gz"
-    # )
+    step_first = EmrAddStepsOperator(
+        task_id = "add_emr_step",
+        job_flow_id = "j-3PB0YNA705IN9",
+        aws_conn_id = "aws_conn_id",
+        steps = SPARK_TASK
+    )
+
     
     # load_station_reading_to_s3 = UploadToS3Operator(
     #     task_id="load_station",
@@ -135,4 +142,4 @@ with DAG(
     # )
     
 
-# download_station_data_to_s3 >> unzip_files >> load_station_reading_to_s3
+# download_station_data_to_s3 >> load_station_reading_to_s3
