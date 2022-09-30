@@ -17,6 +17,13 @@ def transform(spark, s3_objects:list, source_dir, destination_dir):
             
             df_with_new_col = df_with_headers.withColumn("station_id", lit("{0}".format(file_name_csv)))
             
+            # TO DO
+            # 1. Create Spark schema for "df_with_new_col" dataframe before writing it to the
+            #    'clean_data' S3 bucket
+
+            # 2. Use schema created for "df_with_new_col" dataframe before writing it to the
+            #    'clean_data' S3 bucket
+            
             df_with_new_col \
                         .coalesce(16) \
                         .write \
