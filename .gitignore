@@ -3,4 +3,4 @@
 *.cfg
 *.db
 *.pid
-personal.sh
+*.sh
