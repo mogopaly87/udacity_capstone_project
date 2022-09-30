@@ -25,7 +25,7 @@ SPARK_TASK = [
         'ActionOnFailure': 'CONTINUE',
         'HadoopJarStep': {
             'Jar': 'command-runner.jar',
-            'Args': ["spark-submit", "--deploy-mode", "client", "/home/hadoop/exploration.py"],
+            'Args': ["spark-submit", "--deploy-mode", "client", "/home/hadoop/spark_app.py"],
         },
     }
 ]
