@@ -28,7 +28,18 @@ def transform(spark, s3_objects:list, source_dir:str, destination_dir:str) -> No
             df = spark.read.csv("{0}/{1}".format(source_dir, file_name_gz))
             df_with_headers = df.toDF(*col_names)
             
-            df_with_new_col = df_with_headers.withColumn("station_id", lit("{0}".format(file_name_csv)))
+            # Enforce data types for each column
+            changedTypes = df_with_headers.withColumn("year", df["year"].cast("int")) \
+                    .withColumn("month", df["month"].cast("int")) \
+                    .withColumn("tavg", df["tavg"].cast("float")) \
+                    .withColumn("tmin", df["tmin"].cast("float")) \
+                    .withColumn("tmax", df["tmax"].cast("float")) \
+                    .withColumn("prcp", df["prcp"].cast("float")) \
+                    .withColumn("wspd", df["wspd"].cast("float")) \
+                    .withColumn("pres", df["pres"].cast("float")) \
+                    .withColumn("tsun", df["tsun"].cast("int"))
+            
+            df_with_new_col = changedTypes.withColumn("station_id", lit("{0}".format(file_name_csv)))
             
             # TO DO
             # 1. Create Spark schema for "df_with_new_col" dataframe before writing it to the
