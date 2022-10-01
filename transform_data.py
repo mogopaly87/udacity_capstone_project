@@ -1,12 +1,25 @@
 from pyspark.sql.functions import lit
 
 
-def transform(spark, s3_objects:list, source_dir, destination_dir):
+def transform(spark, s3_objects:list, source_dir:str, destination_dir:str) -> None:
+    """Transforms a list of S3 bucket objects and writes data as csv to 
+    designated 'clean' output S3 bucket.
+    
+
+    Args:
+        spark (SparkSession): A Spark Session instance
+        s3_objects (list): A list containing S3 bucket objects to be transformed
+        source_dir (str): S3 bucket source of files in .gz format to be transformed. 
+        E.g.: 's3://<bucket_name>/<folder>'
+        destination_dir (str): S3 bucket destination of cleaned output files. 
+        E.g.: 's3://<bucket_name>/<folder>'
+    """
     
     col_names = ["year", "month", "tavg", "tmin", "tmax", "prcp", "wspd",
                     "pres", "tsun"]
     
     for my_objs in s3_objects:
+        # Iterate over list of S3 objects to extract the file names of each object
         file_name_gz = my_objs.key.split("/")[-1]
         if file_name_gz.endswith(".gz"):        
             file_name_csv = file_name_gz.split(".")
