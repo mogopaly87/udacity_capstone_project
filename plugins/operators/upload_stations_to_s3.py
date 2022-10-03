@@ -34,18 +34,6 @@ class UploadToS3Operator(BaseOperator):
     
     def execute(self, context):
         
-        # for f in os.listdir(self.source_dir):
-            
-        #     file_name = os.path.join(self.source_dir, f)
-            
-        #     if os.path.isfile(file_name):
-        #         s3_hook = S3Hook(aws_conn_id=self.aws_conn_id)
-        #         s3_hook.load_file(
-        #         filename=file_name,
-        #         key=f"{self.key}/{file_name.split('/')[-1]}",
-        #         bucket_name=self.bucket_name
-        #     )
-        
         s3_client = boto3.client('s3', region_name=self.region_name,
                             aws_access_key_id = self.aws_access_key_id,
                             aws_secret_access_key=self.aws_secret_access_key)
