@@ -11,7 +11,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from operators.download_unzip_station_data import DownloadSationDataOperator 
-from operators.upload_to_s3 import UploadToS3Operator
+from operators.upload_stations_to_s3 import UploadToS3Operator
 import boto3
 from airflow.models import Variable
 from airflow.providers.amazon.aws.operators.emr import EmrAddStepsOperator
@@ -108,12 +108,15 @@ with DAG(
 ) as dag:
     
     
-    # task = PythonOperator(
-    #     task_id="load_to_s3",
-    #     python_callable=load_to_s3
-    # )
-    
-    
+        load_station_reading_to_s3 = UploadToS3Operator(
+        task_id="load_station",
+        aws_conn_id="aws_default",
+        key="testing",
+        dest_bucket_name="udacity-dend2-mogo",
+        region_name="us-east-1",
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+    )
 
     
     # download_station_data_to_s3 = DownloadSationDataOperator(
@@ -125,12 +128,12 @@ with DAG(
     #     dest_bucket_name="udacity-dend2-mogo",
     #     key="raw_files")
     
-    clean_to_csv = EmrAddStepsOperator(
-        task_id = "clean_to_csv",
-        job_flow_id = "j-1L7DWK5JJGFJK",
-        aws_conn_id = "aws_default",
-        steps = SPARK_TASK
-    )
+    # clean_to_csv = EmrAddStepsOperator(
+    #     task_id = "clean_to_csv",
+    #     job_flow_id = "j-1L7DWK5JJGFJK",
+    #     aws_conn_id = "aws_default",
+    #     steps = SPARK_TASK
+    # )
 
     # step_second = EmrStepSensor(
     #     task_id='watch_emr_step',
@@ -140,13 +143,7 @@ with DAG(
     # )
     
     
-    # load_station_reading_to_s3 = UploadToS3Operator(
-    #     task_id="load_station",
-    #     aws_conn_id="aws_conn_id",
-    #     key="testing",
-    #     bucket_name="udacity-dend2-mogo",
-    #     source_dir="/tmp/downloads/"
-    # )
+
     
 
 # download_station_data_to_s3 >> load_station_reading_to_s3
