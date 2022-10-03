@@ -127,7 +127,7 @@ with DAG(
     
     clean_to_csv = EmrAddStepsOperator(
         task_id = "clean_to_csv",
-        job_flow_id = "j-83RV630T3B82",
+        job_flow_id = "j-1L7DWK5JJGFJK",
         aws_conn_id = "aws_default",
         steps = SPARK_TASK
     )
