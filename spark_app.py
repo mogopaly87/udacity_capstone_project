@@ -6,10 +6,6 @@ import configparser
 import boto3
 
 
-# source_dir = os.environ['S3_INPUT_SOURCE']
-# destination_dir = os.environ['S3_OUTPUT_DESTINATION']
-# bucket = os.environ['BUCKET']
-
 s3_client = boto3.client('s3')
 obj = s3_client.get_object(Bucket="udacity-dend2-mogo", Key="test_config.ini")
 
