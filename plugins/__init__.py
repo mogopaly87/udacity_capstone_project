@@ -5,4 +5,4 @@ import operators
 
 class UdacityPlugin(AirflowPlugin):
     name = "udacity_plugin"
-    operators = [operators.DownloadSationDataOperator]
+    operators = [operators.stage_to_redshift, operators.upload_stations_to_s3]
