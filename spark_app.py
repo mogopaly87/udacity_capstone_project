@@ -1,6 +1,7 @@
 from util import get_spark_session
 from read_data import read
-from transform_data import transform
+from transform_data import (transform_write_clean_readings,
+                            write_clean_station_data_to_s3)
 from download_readings_by_station_id import download_readings_data_by_id, get_focused_station_data_df
 import os
 import configparser
@@ -31,8 +32,8 @@ def main():
                                 "raw_files")
     s3_objects = read(bucket)
     
-    transform(spark, s3_objects, source_dir, destination_dir)
-    
+    transform_write_clean_readings(spark, s3_objects, source_dir, destination_dir)
+    write_clean_station_data_to_s3(focused_df, destination_dir)
     
 
 if __name__ == "__main__":

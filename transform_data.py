@@ -1,7 +1,7 @@
 from pyspark.sql.functions import lit
 
 
-def transform(spark, s3_objects:list, source_dir:str, destination_dir:str) -> None:
+def transform_write_clean_readings(spark, s3_objects:list, source_dir:str, destination_dir:str) -> None:
     """Transforms a list of S3 bucket objects and writes data as csv to 
     designated 'clean' output S3 bucket.
     
@@ -48,3 +48,18 @@ def transform(spark, s3_objects:list, source_dir:str, destination_dir:str) -> No
                         .option("header", True) \
                         .csv("{0}/{1}" \
                         .format(destination_dir, file_name_csv))
+                        
+
+
+def write_clean_station_data_to_s3(focused_dataframe, output:str):
+    """Receives focused stations data dataframe and writes it to
+    specified S3 bucket
+
+    Args:
+        focused_dataframe (Spark DataFrame): a spark dataframe
+    """
+    focused_dataframe.coalesce(16) \
+    .write \
+    .option("header", True) \
+    .csv("{0}/{1}" \
+    .format(output, "station.csv"))
