@@ -1,7 +1,7 @@
 from util import get_spark_session
 from read_data import read
 from transform_data import transform
-from download_readings_by_station_id import download_readings_data_by_id
+from download_readings_by_station_id import download_readings_data_by_id, get_focused_station_data_df
 import os
 import configparser
 import boto3
@@ -21,9 +21,11 @@ spark = get_spark_session()
 
 def main():
     
+    focused_df = get_focused_station_data_df(spark, "s3://udacity-dend2-mogo/testing/full.json.gz")
+
     # Download readings for each station ID in the list_of_station_ids and save in s3 bucket
     # s3://udacity-dend2-mogo/raw_files/
-    download_readings_data_by_id(spark, 
+    download_readings_data_by_id(focused_df, 
                                 s3_client, 
                                 "udacity-dend2-mogo",
                                 "raw_files")

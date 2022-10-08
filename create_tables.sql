@@ -9,4 +9,4 @@ CREATE TABLE public.staging_readings (
     pres numeric,
     tsun int4,
     station_id VARCHAR(256)
-);
+)   DISTKEY(year) SORTKEY(year);

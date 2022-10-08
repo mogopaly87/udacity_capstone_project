@@ -10,7 +10,7 @@ import os
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
-from operators.upload_stations_to_s3 import UploadToS3Operator
+from operators.upload_raw_stations_to_s3 import UploadToS3Operator
 from operators.stage_to_redshift import StageToRedshiftOperator
 import boto3
 from airflow.models import Variable
@@ -69,7 +69,7 @@ with DAG(
             aws_conn_id='aws_default',
         )
         
-        stage_events_to_redshift = StageToRedshiftOperator(
+        stage_readings_to_redshift = StageToRedshiftOperator(
         task_id='Stage_readings',
         redshift_conn_id="redshift",
         aws_credentials_id="aws_default",
@@ -79,7 +79,7 @@ with DAG(
         )
     
     
-load_station_reading_to_s3 >> clean_to_csv >> watch_emr_step >> stage_events_to_redshift
+load_station_reading_to_s3 >> clean_to_csv >> watch_emr_step >> stage_readings_to_redshift
 
     
 
