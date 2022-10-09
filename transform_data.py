@@ -51,7 +51,7 @@ def transform_write_clean_readings(spark, s3_objects:list, source_dir:str, desti
                         
 
 
-def write_clean_station_data_to_s3(focused_dataframe, output:str):
+def write_clean_station_data_to_s3(focused_dataframe, output_dir:str):
     """Receives focused stations data dataframe and writes it to
     specified S3 bucket
 
@@ -62,4 +62,4 @@ def write_clean_station_data_to_s3(focused_dataframe, output:str):
     .write \
     .option("header", True) \
     .csv("{0}/{1}" \
-    .format(output, "station.csv"))
+    .format(output_dir, "station.csv"))

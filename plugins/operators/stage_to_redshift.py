@@ -12,13 +12,22 @@ class StageToRedshiftOperator(BaseOperator):
     """
     
     template_fields: tuple = ("s3_key",)
-    copy_sql = """
+    copy_readings_sql = """
         COPY {} (year, month, tavg, tmin, tmax, prcp, wspd, pres, tsun, station_id)
         FROM '{}'
         ACCESS_KEY_ID '{}'
         SECRET_ACCESS_KEY '{}'
         IGNOREHEADER 1
         CSV        
+    """
+    copy_stations_sql = """
+        COPY {} (id, english_name, country, region, latitude, longitude, elevation, timezone, start, endd)
+        FROM '{}'
+        ACCESS_KEY_ID '{}'
+        SECRET_ACCESS_KEY '{}'
+        IGNOREHEADER 1
+        DELIMITER ',' ESCAPE
+        removequotes;    
     """
 
     @apply_defaults
@@ -49,7 +58,14 @@ class StageToRedshiftOperator(BaseOperator):
         self.log.info("Copying data from S3 to Redshift")
         s3_path = "s3://{}/{}/".format(self.s3_bucket, self.s3_key)
         print("S3 path >>>", s3_path)
-        formatted_sql = StageToRedshiftOperator.copy_sql.format(
+        sql_to_use = ""
+        
+        if self.table == "staging_readings":
+            sql_to_use = StageToRedshiftOperator.copy_readings_sql
+        elif self.table == "staging_station":
+            sql_to_use = StageToRedshiftOperator.copy_stations_sql
+            
+        formatted_sql = sql_to_use.format(
             self.table,
             s3_path,
             credentials.access_key,
