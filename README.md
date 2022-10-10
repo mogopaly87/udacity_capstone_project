@@ -36,6 +36,17 @@ In this project, I design and build a data pipeline that provides historical wea
 <li>AWS Redshift</li>
 <li>AWS EMR</li>
 <li>Apache Airflow</li>
+<li>PySpark</li>
+<li>Python</li>
 </ul>
 
 <img src="Udacity_capstone.png">
+
+---
+
+<h3>Data Dictionary</h3>
+<p><strong>Monthly Data Measurements</strong></p>
+<img scr="monthly.png">
+
+<p><strong>Weather Station Properties</strong></p>
+<img scr="station.png">
