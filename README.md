@@ -71,13 +71,13 @@ In this project, I design and build a data pipeline that provides historical wea
     </li>
     <li>Airflow Variables
         <ul>
-            <li>access_key_id : >your aws access key id<</li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>access_key_id : _your_aws_access_key_id<</li>
+            <li>secret_access_key  : _your_aws_secret_key_</li>
+            <li>emr_id : _your_EMR_CLUSTER_ID_</li>
+            <li>raw_station_data_key : raw_station_data</li>
+            <li>clean_readings_data_key : clean_readings_data</li>
+            <li>clean_station_data_key : clean_station_data</li>
+            <li>my_s3_bucket : _your_s3_bucket_</li>
         </ul>
     </li>
     <li></li>
