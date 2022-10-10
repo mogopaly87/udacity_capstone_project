@@ -36,7 +36,10 @@ SPARK_TASK = [
 aws_access_key_id = Variable.get("access_key_id")
 aws_secret_access_key = Variable.get("secret_access_key")
 emr_id = Variable.get("emr_id")
-
+raw_station_data = Variable.get("raw_station_data_key")
+clean_readings_data = Variable.get("clean_readings_data_key")
+clean_station_data = Variable.get("clean_station_data_key")
+my_s3_bucket = Variable.get("my_s3_bucket")
 
 
 
@@ -49,8 +52,8 @@ with DAG(
         load_station_reading_to_s3 = UploadToS3Operator(
         task_id="load_station",
         aws_conn_id="aws_default",
-        key="raw_station_data",
-        dest_bucket_name="udacity-dend2-mogo",
+        key=raw_station_data,
+        dest_bucket_name=my_s3_bucket,
         region_name="us-east-1",
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key,
@@ -75,8 +78,8 @@ with DAG(
         task_id='stage_readings_to_redshift',
         redshift_conn_id="redshift",
         aws_credentials_id="aws_default",
-        s3_bucket="udacity-dend2-mogo",
-        s3_key="clean_readings_data",
+        s3_bucket=my_s3_bucket,
+        s3_key=clean_readings_data,
         table="staging_readings",
         )
         
@@ -84,8 +87,8 @@ with DAG(
         task_id='stage_station_data_to_redshift',
         redshift_conn_id="redshift",
         aws_credentials_id="aws_default",
-        s3_bucket="udacity-dend2-mogo",
-        s3_key="clean_station_data/station.csv",
+        s3_bucket=my_s3_bucket,
+        s3_key=clean_station_data,
         table="staging_station",
         )
         
