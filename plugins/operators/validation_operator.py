@@ -31,14 +31,45 @@ class ValidateRedshiftOperator(BaseOperator):
         aws_hook = AwsHook(self.aws_credentials_id)
         credentials = aws_hook.get_credentials()
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
-        # print(SqlQueries.load_readings)
-        # formatted_sql = SqlQueries.load_readings.format(self.table)
-        # result = redshift.run(formatted_sql)
-        # self.log.info("Printing info >>>> \n",dir(result))
         
         conn = redshift.get_conn()
         cursor = conn.cursor()
-        cursor.execute(SqlQueries.load_readings.format(self.table))
+        cursor.execute(SqlQueries.test_stations_for_empty.format(self.table))
         if len(cursor.fetchall()) > 1:
             self.log.info("The table was poplulated correctly")
-        # self.log.info(cursor.fetchall())
+        else:
+            raise ValueError(f"The {self.table} table is empty.")
+        
+
+class ValidateNullOperator(BaseOperator):
+    """Run validation queries to check that primary key is not null
+
+    Args:
+        BaseOperator (ABS): Base operator
+    """
+    
+    
+    @apply_defaults
+    def __init__(self,
+                redshift_conn_id="",
+                aws_credentials_id="",
+                table="",
+                *args, 
+                **kwargs):
+        super(ValidateNullOperator, self).__init__(*args, **kwargs)
+        self.redshift_conn_id = redshift_conn_id
+        self.aws_credentials_id = aws_credentials_id
+        self.table = table
+        
+    
+    def execute(self, context):
+        redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
+        
+        conn = redshift.get_conn()
+        cursor = conn.cursor()
+        cursor.execute(SqlQueries.test_stations_for_null.format(self.table))
+        if len(cursor.fetchall()) > 1:
+            raise ValueError(f"""PASSED: The primary key column of table {self.table} 
+                            contains null value""")
+        else:
+            self.log.info(f"Primary key column passed integrity test ")

@@ -12,7 +12,7 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from operators.upload_raw_stations_to_s3 import UploadToS3Operator
 from operators.stage_to_redshift import StageToRedshiftOperator
-from operators.validation_operator import ValidateRedshiftOperator
+from operators.validation_operator import ValidateRedshiftOperator, ValidateNullOperator
 import boto3
 from airflow.models import Variable
 from airflow.providers.amazon.aws.operators.emr import EmrAddStepsOperator
@@ -74,7 +74,7 @@ with DAG(
         # task_id='stage_readings_to_redshift',
         # redshift_conn_id="redshift",
         # aws_credentials_id="aws_default",
-        # s3_bucket="udacity-dend2-mogo",
+        # s3_bucket="udacity-dend2-mogo",ValidateNullOperator
         # s3_key="clean_data",
         # table="staging_readings",
         # )
@@ -88,16 +88,31 @@ with DAG(
         # table="staging_station",
         # )
         
-        validate_station_count = ValidateRedshiftOperator(
-        task_id='validate_station_count',
+        # validate_station_count = ValidateRedshiftOperator(
+        # task_id='validate_station_count',
+        # redshift_conn_id="redshift",
+        # aws_credentials_id="aws_default",
+        # table="staging_station"
+        # )
+        
+        validate_station_primary_key = ValidateNullOperator(
+        task_id='validate_station_primary_key',
         redshift_conn_id="redshift",
         aws_credentials_id="aws_default",
         table="staging_station"
         )
+        
+        validate_readings_count = ValidateRedshiftOperator(
+        task_id='validate_readings_count',
+        redshift_conn_id="redshift",
+        aws_credentials_id="aws_default",
+        table="staging_readings"
+        )
+        
     
     
 # load_station_reading_to_s3 >> clean_to_csv >> watch_emr_step >> stage_readings_to_redshift
 
-    
+validate_station_primary_key >> validate_readings_count
 
 
