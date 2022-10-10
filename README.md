@@ -60,11 +60,11 @@ In this project, I design and build a data pipeline that provides historical wea
     <li>Set Environment Variables<br><br>
     For your <strong>config.ini</strong> file (template test_config.ini file with project):<br>
         <ul>
-            <li>S3_RAW_STATION_INPUT = s3://{your_s3_bucket}/raw_station_data</li>
-            <li>S3_CLEAN_STATION_OUTPUT = s3://{your_s3_bucket}>/clean_station_data</li>
-            <li>S3_RAW_READINGS_INPUT = s3://{your_s3_bucket}/raw_readings_data</li>
-            <li>S3_CLEAN_READINGS_OUTPUT = s3://{your_s3_bucket}/clean_readings_data</li>
-            <li>BUCKET = {your_s3_bucket}</li>
+            <li>S3_RAW_STATION_INPUT = s3://>your_s3_bucket<//raw_station_data</li>
+            <li>S3_CLEAN_STATION_OUTPUT = s3://>your_s3_bucket<//clean_station_data</li>
+            <li>S3_RAW_READINGS_INPUT = s3://>your_s3_bucket<//raw_readings_data</li>
+            <li>S3_CLEAN_READINGS_OUTPUT = s3://>your_s3_bucket<//clean_readings_data</li>
+            <li>BUCKET = >your_s3_bucket<</li>
             <li>PREFIX = raw_readings_data</li>
             <li>N/B: Create each subfolder in your S3 bucket (raw_station_data, clean_station_data, raw_readings_data, clean_readings_data)</li>
         </ul>
