@@ -47,8 +47,8 @@ In this project, I design and build a data pipeline that provides historical wea
 <h3>Data Dictionary</h3>
 <p><strong>Monthly Data Measurements</strong></p>
 
-<img scr="monthly.png">
+<img src="monthly.png">
 
 <p><strong>Weather Station Properties</strong></p>
 
-<img scr="station.png">
+<img src="station.png">
