@@ -13,8 +13,10 @@ In this project, I design and build a data pipeline that provides historical wea
 <li>Scope project and source data</li>
 <li>Tools and architecture</li>
 <li>Data Dictionary</li>
+<li>Data Model</li>
 <li>Setup Steps</li>
 <li>Run Application</li>
+<li>Future Design Considerations</li>
 </ul>
 
 ---
@@ -55,6 +57,12 @@ In this project, I design and build a data pipeline that provides historical wea
 
 ---
 
+<h3>Data Model</h3>>
+<p>The data warehouse was designed as a Star schema with only one dimension, the weather station properties. However,
+other dimensions can be derived by aggregating data from the fact table (staging_readings)</p>
+
+---
+
 <h3>Setup Steps:</h3>
 
 <ol>
@@ -72,22 +80,30 @@ In this project, I design and build a data pipeline that provides historical wea
     </li><br>
     <li>Airflow Variables
         <ul>
-            <li>access_key_id : _your_aws_access_key_id<</li>
-            <li>secret_access_key  : _your_aws_secret_key_</li>
-            <li>emr_id : _your_EMR_CLUSTER_ID_</li>
+            <li>access_key_id : _your_aws_access_key_id</li>
+            <li>secret_access_key  : _your_aws_secret_key</li>
+            <li>emr_id : _your_EMR_CLUSTER_ID</li>
             <li>raw_station_data_key : raw_station_data</li>
             <li>clean_readings_data_key : clean_readings_data</li>
             <li>clean_station_data_key : clean_station_data</li>
-            <li>my_s3_bucket : _your_s3_bucket_</li>
+            <li>my_s3_bucket : _your_s3_bucket</li>
         </ul>
     </li><br>
     <li>Create a AWS Redshift cluster and EMR cluster with Apache Spark and Hadoop installed.</li><br>
-    <li>Copy ALL Spark-related files (util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py) to the home directory of EMR cluster using this command:<br><br>-> <strong>scp -i ~/_path_to_/_your_key_pair.pem util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com:~/.</strong></li><br>    
+    <li>Copy ALL Spark-related files <strong>(util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py)</strong> to the home directory of EMR Master node using this command:<br><br>-> <strong>scp -i ~/_path_to_/_your_key_pair.pem util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com:~/.</strong></li><br>    
     <li>Remotely log into EMR cluster to confirm files are copied successfully using this command:<br><br>-> <strong>ssh -i ~/_path_to/your_key_pair.pem hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com</strong></li><br>
-    <li>While remotely logged into EMR Master node, run this command:<br>-> <strong>pip install boto3 requests</strong><br>-> <strong>pip install pyspark</strong></li>
+    <li>While remotely logged into EMR Master node, run this command:<br>-> <strong>pip install boto3 requests</strong></li>
 </ol>
+
+---
 
 <h3>Run Application</h3>
 <p>
 To Run the application, start Airflow webserver and scheduler. Then run the DAG.
 </p>
+
+---
+
+<h3>Future Design Considerations</h3>
+<p>Since the weather measurements are continuous, an additional feature would include adding daily/monthly queries to the Meteostat API to update
+data warehouse.</p>
