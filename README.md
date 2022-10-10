@@ -68,7 +68,7 @@ In this project, I design and build a data pipeline that provides historical wea
             <li>PREFIX = raw_readings_data</li>
             <li>N/B: Create each subfolder in your S3 bucket (raw_station_data, clean_station_data, raw_readings_data, clean_readings_data)</li>
         </ul>
-    </li>
+    </li><br>
     <li>Airflow Variables
         <ul>
             <li>access_key_id : _your_aws_access_key_id<</li>
@@ -79,8 +79,9 @@ In this project, I design and build a data pipeline that provides historical wea
             <li>clean_station_data_key : clean_station_data</li>
             <li>my_s3_bucket : _your_s3_bucket_</li>
         </ul>
-    </li>
-    <li></li>
-    <li></li>
-    <li></li>
+    </li><br>
+    <li>Create a AWS Redshift cluster and EMR cluster with Apache Spark and Hadoop installed.</li><br>
+    <li>Copy ALL Spark-related files (util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py) to the home directory of EMR cluster using this command:<br><strong>scp -i ~/_path_to_/_your_key_pair.pem util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com:~/.</strong></li>    
+    <li>Remotely log into EMR cluster to confirm files are copied successfully using this command:<br><strong>ssh -i ~/path_to/your_key_pair.pem hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com</strong></li>
+    <li>While remotely logged into EMR Master node, run this command:<br>-> <strong>pip install boto3 requests</strong></li>
 </ol>
