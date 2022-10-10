@@ -58,7 +58,7 @@ In this project, I design and build a data pipeline that provides historical wea
 
 <ol>
     <li>Set Environment Variables<br><br>
-    For your <strong>config.ini</strong> file (template test_config.ini file with project):
+    For your <strong>config.ini</strong> file (template test_config.ini file with project):<br>
         <ul>
             <li>S3_RAW_STATION_INPUT = s3://{your_s3_bucket}/raw_station_data</li>
             <li>S3_CLEAN_STATION_OUTPUT = s3://{your_s3_bucket}>/clean_station_data</li>
@@ -69,7 +69,17 @@ In this project, I design and build a data pipeline that provides historical wea
             <li>N/B: Create each subfolder in your S3 bucket (raw_station_data, clean_station_data, raw_readings_data, clean_readings_data)</li>
         </ul>
     </li>
-    <li></li>
+    <li>Airflow Variables
+        <ul>
+            <li>access_key_id : >your aws access key id<</li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </li>
     <li></li>
     <li></li>
     <li></li>
