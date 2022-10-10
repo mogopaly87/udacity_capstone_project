@@ -16,3 +16,13 @@ In this project, I design and build a data pipeline that provides historical wea
 <li>Define the data model</li>
 <li>Setup Steps</li>
 </ul>
+
+---
+
+<h3>Scope project and source data</h3>
+<p>This project will integrate weather station data and weather measurement data with fact and dimension tables.</p>
+<p>Data Sets:</p>
+<ul>
+<li><a href="https://dev.meteostat.net/bulk/stations.html">Weather Station Data</a></li>
+<li><a href="https://dev.meteostat.net/bulk/monthly.html"></a>Monthly Measurements</li>
+</ul>
