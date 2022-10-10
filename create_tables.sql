@@ -21,6 +21,6 @@ CREATE TABLE public.staging_station (
     longitude varchar(256),
     elevation varchar(256),
     timezone varchar(256),
-    start varchar(256),
-    endd varchar(256)
+    "start" varchar(256),
+    "end" varchar(256)
 );
