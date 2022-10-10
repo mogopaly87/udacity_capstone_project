@@ -54,7 +54,7 @@ In this project, I design and build a data pipeline that provides historical wea
 
 ---
 
-<h3>Setup Steps:
+<h3>Setup Steps:</h3>
 
 <ol>
     <li>Set Environment Variables<br>
@@ -72,4 +72,3 @@ In this project, I design and build a data pipeline that provides historical wea
     <li></li>
     <li></li>
 </ol>
-</h3>
