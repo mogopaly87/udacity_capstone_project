@@ -24,5 +24,5 @@ In this project, I design and build a data pipeline that provides historical wea
 <p>Data Sets:</p>
 <ul>
 <li><a href="https://dev.meteostat.net/bulk/stations.html">Weather Station Data</a></li>
-<li><a href="https://dev.meteostat.net/bulk/monthly.html"></a>Monthly Measurements</li>
+<li><a href="https://dev.meteostat.net/bulk/monthly.html">Monthly Measurements</a></li>
 </ul>
