@@ -15,25 +15,28 @@ config = configparser.ConfigParser()
 config.read_string(obj['Body'].read().decode())
 
 bucket = config['S3']['BUCKET']
-destination_dir = config['S3']['S3_OUTPUT_DESTINATION']
-source_dir = config['S3']['S3_INPUT_SOURCE']
+raw_readings_data = config['S3']['S3_RAW_READINGS_INPUT']
+clean_readings_data = config['S3']['S3_CLEAN_READINGS_OUTPUT']
+raw_station_data = config['S3']['S3_RAW_STATION_INPUT']
+clean_station_data = config['S3']['S3_CLEAN_STATION_OUTPUT']
+key = config['S3']['PREFIX']
 spark = get_spark_session()
 
 
 def main():
     
-    focused_df = get_focused_station_data_df(spark, "s3://udacity-dend2-mogo/testing/full.json.gz")
+    focused_df = get_focused_station_data_df(spark, raw_station_data)
 
     # Download readings for each station ID in the list_of_station_ids and save in s3 bucket
     # s3://udacity-dend2-mogo/raw_files/
     download_readings_data_by_id(focused_df, 
                                 s3_client, 
-                                "udacity-dend2-mogo",
-                                "raw_files")
+                                bucket,
+                                key)
     s3_objects = read(bucket)
     
-    transform_write_clean_readings(spark, s3_objects, source_dir, destination_dir)
-    write_clean_station_data_to_s3(focused_df, destination_dir)
+    transform_write_clean_readings(spark, s3_objects, raw_readings_data, clean_readings_data)
+    write_clean_station_data_to_s3(focused_df, clean_station_data)
     
 
 if __name__ == "__main__":

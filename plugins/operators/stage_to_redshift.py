@@ -21,7 +21,7 @@ class StageToRedshiftOperator(BaseOperator):
         CSV        
     """
     copy_stations_sql = """
-        COPY {} (id, english_name, country, region, latitude, longitude, elevation, timezone, start, endd)
+        COPY {} (id, english_name, country, region, latitude, longitude, elevation, timezone, start, "end")
         FROM '{}'
         ACCESS_KEY_ID '{}'
         SECRET_ACCESS_KEY '{}'

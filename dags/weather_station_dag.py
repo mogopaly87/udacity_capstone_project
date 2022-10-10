@@ -35,6 +35,8 @@ SPARK_TASK = [
 # Retrieve AWS credentials from Airflow
 aws_access_key_id = Variable.get("access_key_id")
 aws_secret_access_key = Variable.get("secret_access_key")
+emr_id = Variable.get("emr_id")
+
 
 
 
@@ -44,56 +46,55 @@ with DAG(
     start_date=datetime.now()
 ) as dag:
     
-    
-        # load_station_reading_to_s3 = UploadToS3Operator(
-        # task_id="load_station",
-        # aws_conn_id="aws_default",
-        # key="testing",
-        # dest_bucket_name="udacity-dend2-mogo",
-        # region_name="us-east-1",
-        # aws_access_key_id=aws_access_key_id,
-        # aws_secret_access_key=aws_secret_access_key,
-        # )
+        load_station_reading_to_s3 = UploadToS3Operator(
+        task_id="load_station",
+        aws_conn_id="aws_default",
+        key="raw_station_data",
+        dest_bucket_name="udacity-dend2-mogo",
+        region_name="us-east-1",
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        )
 
 
-        # clean_to_csv = EmrAddStepsOperator(
-        #     task_id = "clean_to_csv",
-        #     job_flow_id = "j-343BUU19C93LJ",
-        #     aws_conn_id = "aws_default",
-        #     steps = SPARK_TASK
-        # )
+        clean_to_csv = EmrAddStepsOperator(
+            task_id = "clean_to_csv",
+            job_flow_id = emr_id,
+            aws_conn_id = "aws_default",
+            steps = SPARK_TASK
+        )
 
-        # watch_emr_step = EmrStepSensor(
-        #     task_id='watch_emr_step',
-        #     job_flow_id="j-343BUU19C93LJ",
-        #     step_id="{{ task_instance.xcom_pull(task_ids='clean_to_csv', key='return_value')[0] }}",
-        #     aws_conn_id='aws_default',
-        # )
+        watch_emr_step = EmrStepSensor(
+            task_id='watch_emr_step',
+            job_flow_id=emr_id,
+            step_id="{{ task_instance.xcom_pull(task_ids='clean_to_csv', key='return_value')[0] }}",
+            aws_conn_id='aws_default',
+        )
         
-        # stage_readings_to_redshift = StageToRedshiftOperator(
-        # task_id='stage_readings_to_redshift',
-        # redshift_conn_id="redshift",
-        # aws_credentials_id="aws_default",
-        # s3_bucket="udacity-dend2-mogo",ValidateNullOperator
-        # s3_key="clean_data",
-        # table="staging_readings",
-        # )
+        stage_readings_to_redshift = StageToRedshiftOperator(
+        task_id='stage_readings_to_redshift',
+        redshift_conn_id="redshift",
+        aws_credentials_id="aws_default",
+        s3_bucket="udacity-dend2-mogo",
+        s3_key="clean_readings_data",
+        table="staging_readings",
+        )
         
-        # stage_station_data_to_redshift = StageToRedshiftOperator(
-        # task_id='stage_station_data_to_redshift',
-        # redshift_conn_id="redshift",
-        # aws_credentials_id="aws_default",
-        # s3_bucket="udacity-dend2-mogo",
-        # s3_key="clean_data/station.csv",
-        # table="staging_station",
-        # )
+        stage_station_data_to_redshift = StageToRedshiftOperator(
+        task_id='stage_station_data_to_redshift',
+        redshift_conn_id="redshift",
+        aws_credentials_id="aws_default",
+        s3_bucket="udacity-dend2-mogo",
+        s3_key="clean_station_data/station.csv",
+        table="staging_station",
+        )
         
-        # validate_station_count = ValidateRedshiftOperator(
-        # task_id='validate_station_count',
-        # redshift_conn_id="redshift",
-        # aws_credentials_id="aws_default",
-        # table="staging_station"
-        # )
+        validate_station_count = ValidateRedshiftOperator(
+        task_id='validate_station_count',
+        redshift_conn_id="redshift",
+        aws_credentials_id="aws_default",
+        table="staging_station"
+        )
         
         validate_station_primary_key = ValidateNullOperator(
         task_id='validate_station_primary_key',
@@ -111,8 +112,6 @@ with DAG(
         
     
     
-# load_station_reading_to_s3 >> clean_to_csv >> watch_emr_step >> stage_readings_to_redshift
+load_station_reading_to_s3 >> clean_to_csv >> watch_emr_step >> stage_readings_to_redshift >> stage_station_data_to_redshift
 
-validate_station_primary_key >> validate_readings_count
-
-
+stage_station_data_to_redshift >> [validate_station_count, validate_station_primary_key, validate_readings_count]
