@@ -26,3 +26,16 @@ In this project, I design and build a data pipeline that provides historical wea
 <li><a href="https://dev.meteostat.net/bulk/stations.html">Weather Station Data</a></li>
 <li><a href="https://dev.meteostat.net/bulk/monthly.html">Monthly Measurements</a></li>
 </ul>
+
+---
+
+<h3>Tools and Architecture</h3>
+<ul>
+<li>Meteostat API</li>
+<li>AWS S3</li>
+<li>AWS Redshift</li>
+<li>AWS EMR</li>
+<li>Apache Airflow</li>
+</ul>
+
+<img src="Udacity_capstone.png">
