@@ -59,6 +59,3 @@ def get_focused_station_data_df(spark, json_file, schema_object=None):
 
     return none_null_focus_df
 
-def write_focused_df_as_csv_to_s3():
-    
-    pass
