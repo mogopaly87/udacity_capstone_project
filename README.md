@@ -4,7 +4,7 @@
 
 <h3>Project Summary</h3>
 <p>
-In this project, I design and build a data pipeline that provides historical weather measurement data for all available weather stations as provided by  Meteostat endpoints. This project provides a data warehouse that will serve as a sing-source-of-truth for potential data analysts.
+In this project, I design and build a data pipeline that provides historical weather measurement data for all available weather stations as provided by  Meteostat endpoints. This project provides a data warehouse that will serve as a sing-source-of-truth for potential data analysts and to allow dashboards to integrate location-based weather data.
 </p>
 
 <p>Documentation Structure:</p>
@@ -13,14 +13,13 @@ In this project, I design and build a data pipeline that provides historical wea
 <li>Scope project and source data</li>
 <li>Tools and architecture</li>
 <li>Data Dictionary</li>
-<li>Define the data model</li>
 <li>Setup Steps</li>
 </ul>
 
 ---
 
 <h3>Scope project and source data</h3>
-<p>This project will integrate weather station data and weather measurement data with fact and dimension tables.</p>
+<p>This project will integrate weather station properties and weather measurement.</p>
 <p>Data Sets:</p>
 <ul>
 <li><a href="https://dev.meteostat.net/bulk/stations.html">Weather Station Data</a></li>
@@ -52,3 +51,25 @@ In this project, I design and build a data pipeline that provides historical wea
 <p><strong>Weather Station Properties</strong></p>
 
 <img src="station.png">
+
+---
+
+<h3>Setup Steps:
+
+<ol>
+    <li>Set Environment Variables<br>
+    For your <strong>config.ini</strong>file:
+        <ul>
+            <li>S3_RAW_STATION_INPUT=s3://{your_s3_bucket}/raw_station_data</li>
+            <li>S3_CLEAN_STATION_OUTPUT=s3://{your_s3_bucket}>/clean_station_data</li>
+            <li>S3_RAW_READINGS_INPUT=s3://{your_s3_bucket}/raw_readings_data</li>
+            <li>S3_CLEAN_READINGS_OUTPUT=s3://{your_s3_bucket}/clean_readings_data</li>
+            <li>BUCKET={your_s3_bucket}</li>
+        </ul>
+    </li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ol>
+</h3>
