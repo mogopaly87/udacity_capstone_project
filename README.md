@@ -81,7 +81,7 @@ In this project, I design and build a data pipeline that provides historical wea
         </ul>
     </li><br>
     <li>Create a AWS Redshift cluster and EMR cluster with Apache Spark and Hadoop installed.</li><br>
-    <li>Copy ALL Spark-related files (util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py) to the home directory of EMR cluster using this command:<br><strong>scp -i ~/_path_to_/_your_key_pair.pem util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com:~/.</strong></li>    
-    <li>Remotely log into EMR cluster to confirm files are copied successfully using this command:<br><strong>ssh -i ~/path_to/your_key_pair.pem hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com</strong></li>
+    <li>Copy ALL Spark-related files (util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py) to the home directory of EMR cluster using this command:<br><br>-> <strong>scp -i ~/_path_to_/_your_key_pair.pem util.py, transform_data.py, spark_app.py, read_data.py, and download_readings_by_station_id.py hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com:~/.</strong></li>    
+    <li>Remotely log into EMR cluster to confirm files are copied successfully using this command:<br><br>-> <strong>ssh -i ~/path_to/your_key_pair.pem hadoop@ec2-X-XX-XX-XXX.compute-1.amazonaws.com</strong></li>
     <li>While remotely logged into EMR Master node, run this command:<br>-> <strong>pip install boto3 requests</strong></li>
 </ol>
