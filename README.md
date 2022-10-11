@@ -60,7 +60,7 @@ In this project, I design and build a data pipeline that provides historical wea
 <h3>Data Model</h3>>
 <p>The data warehouse was designed as a Star schema with only one dimension, the weather station properties. However,
 other dimensions can be derived by aggregating data from the fact table (staging_readings)</p>
-
+<img src="udacity_capstone_project.drawio.png">
 ---
 
 <h3>Setup Steps:</h3>
@@ -107,3 +107,16 @@ To Run the application, start Airflow webserver and scheduler. Then run the DAG.
 <h3>Future Design Considerations</h3>
 <p>Since the weather measurements are continuous, an additional feature would include adding daily/monthly queries to the Meteostat API to update
 data warehouse.</p>
+
+---
+
+<h3>Write Up</h3>
+<ol>
+    <li>
+    The data was increased by 100x.
+    <p>
+        In a scenario where the data increases by 100x, my AWS EMR configuration is set to Auto Scaling if required. This would take care of any requirement
+        for additional computation.
+    </p>
+    </li>
+</ol>
