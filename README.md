@@ -42,25 +42,25 @@ In this project, I design and build a data pipeline that provides historical wea
 <li>Python</li>
 </ul>
 
-<img src="Udacity_capstone.png">
+<img src="/media/Udacity_capstone.png">
 
 ---
 
 <h3>Data Dictionary</h3>
 <p><strong>Monthly Data Measurements</strong></p>
 
-<img src="monthly.png">
+<img src="/media/monthly.png">
 
 <p><strong>Weather Station Properties</strong></p>
 
-<img src="station.png">
+<img src="/media/station.png">
 
 ---
 
 <h3>Data Model</h3>>
 <p>The data warehouse was designed as a Star schema with only one dimension, the weather station properties. However,
 other dimensions can be derived by aggregating data from the fact table (staging_readings)</p>
-<img src="udacity_capstone_project.drawio.png">
+<img src="/media/udacity_capstone_project.drawio.png">
 ---
 
 <h3>Setup Steps:</h3>
@@ -168,12 +168,12 @@ data warehouse.</p>
     </li>
     <li>PySpark
         <p>
-            Since I was going to be transforming more than 1 million records, I decided to use a more powerful compute engine such as Airflow so as not to be limited by my computer's memory.
+            Since I was going to be transforming more than 1 million records, I decided to use a more powerful compute engine such as Spark so as not to be limited by my computer's memory.
         </p>
     </li>
     <li>Python
         <p>
-            Python programming language provides the largest data engineering integrations with many tools. 
+            Python programming language provides one of the largest data engineering integrations with many tools. 
         </p>
     </li>
 </ul>

@@ -1,4 +1,5 @@
 from pyspark.sql.functions import lit
+from pyspark.sql.utils import IllegalArgumentException
 
 
 def transform_write_clean_readings(spark, s3_objects:list, source_dir:str, destination_dir:str) -> None:
@@ -25,9 +26,14 @@ def transform_write_clean_readings(spark, s3_objects:list, source_dir:str, desti
             file_name_csv = "{0}".format(file_name_csv[0])
             
             df = spark.read.csv("{0}/{1}".format(source_dir, file_name_gz))
+            print(f"<<<<<<< Transforming >>>>>>> {file_name_gz}")
             col_names = ["year", "month", "tavg", "tmin", "tmax", "prcp", "wspd",
                     "pres", "tsun"]
-            df_with_headers = df.toDF(*col_names)
+            try:
+                df_with_headers = df.toDF(*col_names)
+            except IllegalArgumentException:
+                print("The number of columns doesn't match")
+                continue
             
             # Enforce data types for each column
             changedTypes = df_with_headers.withColumn("year", df_with_headers["year"].cast("int")) \
