@@ -119,4 +119,16 @@ data warehouse.</p>
         for additional computation.
     </p>
     </li>
+    <li>
+    The pipelines would be run on a daily basis by 7 am every day.
+    <p>
+        This scenario, as I stated in "Future Design Considerations", would be handled by using Airflow to schedule the job to run at 7 am every day.
+    </p>
+    </li>
+    <li>
+    The database needed to be accessed by 100+ people.
+    <p>
+        AWS Redshift is capable of handling up to 500 connections as a result, I am confident this scenario will be handled appropriately. 
+    </p>
+    </li>
 </ol>
