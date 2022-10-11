@@ -29,14 +29,14 @@ def main():
 
     # Download readings for each station ID in the list_of_station_ids and save in s3 bucket
     # s3://udacity-dend2-mogo/raw_files/
-    # download_readings_data_by_id(focused_df, 
-    #                             s3_client, 
-    #                             bucket,
-    #                             key)
+    download_readings_data_by_id(focused_df, 
+                                s3_client, 
+                                bucket,
+                                key)
     s3_objects = read(bucket)
     
     transform_write_clean_readings(spark, s3_objects, raw_readings_data, clean_readings_data)
-    # write_clean_station_data_to_s3(focused_df, clean_station_data)
+    write_clean_station_data_to_s3(focused_df, clean_station_data)
     
 
 if __name__ == "__main__":

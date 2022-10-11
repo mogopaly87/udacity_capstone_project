@@ -178,7 +178,7 @@ data warehouse.</p>
     </li>
     <li>JOIN query showing data model
         <img src="/media/data_model_join.png">
-    </li>
+    </li><br>
     <li>Record count for 'staging_readings' table
         <img src="/media/record_count.png">
     </li>
