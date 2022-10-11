@@ -176,4 +176,10 @@ data warehouse.</p>
             Python programming language provides one of the largest data engineering integrations with many tools. 
         </p>
     </li>
+    <li>JOIN query showing data model
+        <img src="/media/data_model_join.png">
+    </li>
+    <li>Record count for 'staging_readings' table
+        <img src="/media/record_count.png">
+    </li>
 </ul>
