@@ -132,3 +132,48 @@ data warehouse.</p>
     </p>
     </li>
 </ol>
+
+<h4>Choice of Tools, Technologies, and Data Model</h4>
+<ul>
+    <li>Star Schema
+        <p>
+            The dataware serves as a store of historical data for weather measurements from different weather stations. It was first populated with ALL
+            historical datasets for all weather stations and will receive batch uploads monthly. Hence, a star schema is more optimized for infrequent writes and reads. A star schema is also optimized for aggregation queries.
+        </p>
+    </li>
+    <li>Meeostat API
+        <p>
+            I chose this API because the dataset available are the most up to date and they are very frequently updated.
+        </p>
+    </li>
+    <li>AWS S3
+        <p>
+            I chose to use S3 bucket as it provides a relatively cheap storage solution. It also integrates seamlessly with other tools I employed in this project. 
+        </p>
+    </li>
+    <li>AWS Redshift
+        <p>
+            Choosing Redshift was only natural since it provides an optimized data warehouse that fits seamlessly with all the other technologies I used. Also, it provides bandwith for scaling the project. 
+        </p>
+    </li>
+    <li>AWS EMR
+        <p>
+            I chose to use an EMR cluster to reduce configuration complexities of Spark on local environment and provide flexibility for scaling computation needs as necessary.
+        </p>
+    </li>
+    <li>Apache Airflow
+        <p>
+            I decided to use Airflow to help schedule/coordinate wait time between each task, especially the task that come immediately after EMR job. It would have been very difficult to figure out when the next task should complete after transform in EMR without Airflow.
+        </p>
+    </li>
+    <li>PySpark
+        <p>
+            Since I was going to be transforming more than 1 million records, I decided to use a more powerful compute engine such as Airflow so as not to be limited by my computer's memory.
+        </p>
+    </li>
+    <li>Python
+        <p>
+            Python programming language provides the largest data engineering integrations with many tools. 
+        </p>
+    </li>
+</ul>

@@ -29,7 +29,7 @@ def get_list_of_station_ids(none_null_focus_df):
     """
     
     # Collect all station ids into a list
-    station_ids = [data[0] for data in none_null_focus_df.select('id').collect()][0:10]
+    station_ids = [data[0] for data in none_null_focus_df.select('id').collect()]
     
     return station_ids
 
