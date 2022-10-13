@@ -60,7 +60,7 @@ In this project, I design and build a data pipeline that provides historical wea
 <h3>Data Model</h3>>
 <p>The data warehouse was designed as a Star schema with only one dimension, the weather station properties. However,
 other dimensions can be derived by aggregating data from the fact table (staging_readings)</p>
-<img src="/media/udacity_capstone_project.drawio.png">
+<img src="/media/udacity_capstone_project.drawio_1.png">
 ---
 
 <h3>Setup Steps:</h3>
