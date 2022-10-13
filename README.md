@@ -183,3 +183,12 @@ data warehouse.</p>
         <img src="/media/record_count.png">
     </li>
 </ul>
+
+---
+
+<h4>Final Schema</h4>
+<p>Staging Station Table</p>
+<img src="/media/staging_station_schema.png">
+
+<p>Staging Readings Table</p>
+<img src="/media/staging_readings_schema.png">
